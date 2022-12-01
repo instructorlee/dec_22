@@ -36,12 +36,12 @@ considerations:
 """
 
 name = 'FuzzBall'
-power_points = 10 # minimum = 0, maximum = 10
-can_teleport = False 
+power_points = 1 # minimum = 0, maximum = 10
+can_teleport = True 
 
 print ( f'{name} has {power_points} Power Points and {"can" if can_teleport else "cannot"} teleport' )
 
-action = 'rest' # run, rest, teleport 
+action = 'teleport' # run, rest, teleport 
 
 if action == 'run':
 
@@ -61,8 +61,21 @@ elif action == 'rest':
     else:
         print( 'no rest needed' )
 
+elif action == 'teleport':
+    
+    if can_teleport:
+
+        if power_points >= 2:
+            print ( 'teleporting' )
+            power_points -= 2
+
+        else:
+            print( 'not enough points' )
+
+    else:
+        print( 'unable to teleport' )
+
 else:
     print ( "Invalid Command" )
 
-
-print ( power_points )
+print( power_points )
