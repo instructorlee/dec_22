@@ -1,106 +1,101 @@
-
-"""
-SPECS
-
- Handle the actions of a game character
-
- character traits:
-    Name
-    Power Points
-    Can teleport
-
- needs to perform actions:
- 
-    run
-        - costs 1 power point
-        - Print message if running
-        - print message contining number of points if not enough points
-
-    rest
-        - gain 1 power point
-        - Print messasge if resting
-        - print plenty of points message if no rest is necessary
-
-    teleport 
-        - costs 2 power points
-        - print name is teleporting
-        - print message if not enough power points
-        - print message if unable to teleport
-
-    invalid actions
-        - print 'Invalid Action'
-
-considerations:
-    player can only have 0 to 10 power points.
-
-"""
-
-def do_action(action, character):
-
-    name, power_points, can_teleport, inventory = character.values()
-
-    if action == 'run':
-
-        if power_points > 0:
-            power_points -= 1
-            print ( f'{name} is running' )
-
-        else:
-            print ( 'not enough power points to run')
-
-    elif action == 'rest':
-        
-        if power_points < 10:
-            print( 'resting' )
-            power_points += 1
-
-        else:
-            print( 'no rest needed' )
-
-    elif action == 'teleport':
-        
-        if can_teleport:
-
-            if power_points >= 2:
-                print ( 'teleporting' )
-                power_points -= 2
-
-            else:
-                print( 'not enough points' )
-
-        else:
-            print( 'unable to teleport' )
-
-    else:
-        print ( "Invalid Command" )
-
-    print( power_points )
-
 characters = [ 
-    {
-        "name": "FuzzBall",
+    {   
+        "type": "FuzzBall",
+        "name": "Fred",
         "power_points": 5,
         "can_teleport": False,
         "inventory": ['food', 'fireball', 'shield']
     },
     {
-        "name": "BeatleBop",
+        "type": "BeatleBop",
+        "name": "Betty",
         "power_points": 1,
         "can_teleport": True,
-        "inventory": ['food', 'sword', 'silly stones']
+        "inventory": ['food', 'sword', 'silly stones'] 
     }
 ]
 
-# name, power_points, can_teleport, inventory = characters[0].values()
-import random
+is_active = True
 
-for character in characters:
+def get_character(character_name):
 
-    name, power_points, can_teleport, inventory = character.values()
+    for character in characters:
+        if character['name'] == character_name: 
+            return character
 
-    print ( f'{name} has {power_points} Power Points and {"can" if can_teleport else "cannot"} teleport' )
+    return None
 
-    actions = ['run', 'rest', 'teleport']
-    action = random.choice(actions) # run, rest, teleport 
-    
+def do_action(action, character):
+
+    type, name, power_points, can_teleport, inventory = character.values()
+
+    if action == 'run':
+
+        if power_points >= 2:
+            print( f'{name} is running.')
+            power_points -= 2
+
+        else:
+            print( f'{name} only has {power_points} Power Points and cannot run.')
+
+    elif action == 'rest':
+        
+        if power_points < 10:
+            print( f'{name} is resting.')
+            power_points += 1
+
+        else:
+            print( f'{name} has {power_points} Power Points and does not need to rest.')
+
+    elif action == 'teleport':
+        
+        if power_points >= 4 and can_teleport:
+            print( f'{name} is teleporting.')
+            power_points -= 4
+
+        elif power_points < 4:
+            print( f'{name} only has {power_points} Power Points and cannot teleport.')
+
+        else:
+            print( f'{name} is not able to teleport.')
+
+    elif action == 'inventory':
+
+        for item in inventory:
+                print ( item )
+
+    else:
+        print ( "Invalid action")
+
+def reset_characters():
+    for character in characters:
+        character['power_points'] = 10
+
+def update_character_inventory(character, item):
+    character['inventory'].append(item)
+
+while is_active: 
+
+    line_input = input('command? ').strip() 
+
+    if line_input == "": 
+        continue
+
+    line_parts = (line_input + "  ").split(" ")
+
+    command = line_parts[0]
+    action = line_parts[1]
+    extra = line_parts[2]
+
+    if command == 'quit':
+        is_active = False
+        continue
+
+    character = get_character(command)
+
+    if character is None:
+        print("invalid character")
+        continue
+
     do_action(action, character)
+    
