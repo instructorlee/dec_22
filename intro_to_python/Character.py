@@ -72,4 +72,3 @@ class Character:
 
         for item in self.inventory:
                 print ( item )
-
