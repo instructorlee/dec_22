@@ -1,84 +1,49 @@
-characters = [ 
-    {   
-        "type": "FuzzBall",
-        "name": "Fred",
-        "power_points": 5,
-        "can_teleport": False,
-        "inventory": ['food', 'fireball', 'shield']
-    },
-    {
-        "type": "BeatleBop",
-        "name": "Betty",
-        "power_points": 1,
-        "can_teleport": True,
-        "inventory": ['food', 'sword', 'silly stones'] 
-    }
+from Character import Character
+from map import Map, Point
+
+characters = [
+    Character('FuzzBall', 'Fred', ['food', 'fireball', 'shield'], can_teleport=True, position=Point(1,2), token='F'),
+    Character('FurOFury', 'Firora', [], position=Point(3,4), token='O'),
+    Character('BeatleBop', 'Bob', ['food', 'sword', 'silly stones'], can_teleport=True, position=Point(5,6), token='B')
 ]
 
 is_active = True
+map = Map(characters)
 
 def get_character(character_name):
 
     for character in characters:
-        if character['name'] == character_name: 
+        if character.name == character_name:
             return character
 
     return None
 
-def do_action(action, character):
-
-    type, name, power_points, can_teleport, inventory = character.values()
+def do_action(action, direction, character):
 
     if action == 'run':
 
-        if power_points >= 2:
-            print( f'{name} is running.')
-            power_points -= 2
-
-        else:
-            print( f'{name} only has {power_points} Power Points and cannot run.')
+        character.run(direction, map)
 
     elif action == 'rest':
         
-        if power_points < 10:
-            print( f'{name} is resting.')
-            power_points += 1
-
-        else:
-            print( f'{name} has {power_points} Power Points and does not need to rest.')
+        character.rest()
 
     elif action == 'teleport':
         
-        if power_points >= 4 and can_teleport:
-            print( f'{name} is teleporting.')
-            power_points -= 4
-
-        elif power_points < 4:
-            print( f'{name} only has {power_points} Power Points and cannot teleport.')
-
-        else:
-            print( f'{name} is not able to teleport.')
+        character.teleport()
 
     elif action == 'inventory':
 
-        for item in inventory:
-                print ( item )
+        character.list_inventory()
 
     else:
         print ( "Invalid action")
 
-def reset_characters():
-    for character in characters:
-        character['power_points'] = 10
+while is_active:
 
-def update_character_inventory(character, item):
-    character['inventory'].append(item)
+    line_input = input('command? ').strip()
 
-while is_active: 
-
-    line_input = input('command? ').strip() 
-
-    if line_input == "": 
+    if line_input == "":
         continue
 
     line_parts = (line_input + "  ").split(" ")
@@ -91,11 +56,19 @@ while is_active:
         is_active = False
         continue
 
+    elif command == 'view-map':
+        map.view()
+        continue
+
+    elif command == 'view-characters':
+        for character in characters:
+            print( f'{character.token} : {character.name}')
+
     character = get_character(command)
 
     if character is None:
-        print("invalid character")
+        print( "invalid character" )
         continue
 
-    do_action(action, character)
+    do_action(action, extra, character)
     
