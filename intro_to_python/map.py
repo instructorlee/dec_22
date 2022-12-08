@@ -19,7 +19,7 @@ class Map:
 
     def reset(self):
         
-        self.grid = [
+        self.grid = [ # nested array / multi-dimensional array
             ['.', '.', '.' ,'.', '.', '.', '.' ,'.', '.', '.' ],
             ['.', '.', '.' ,'.', '.', '.', '.' ,'.', '.', '.' ],
             ['.', '.', '.' ,'.', '.', '.', '.' ,'.', '.', '.' ],
@@ -32,8 +32,12 @@ class Map:
             ['.', '.', '.' ,'.', '.', '.', '.' ,'.', '.', '.' ]
         ]
 
+        self.new_grid = [
+            [GridSquare()]
+        ]
+
     def set_character_position(self, character, clear = False):
-     self.grid[character.position.y][character.position.x] = '.' if clear else character.token
+        self.grid[character.position.y][character.position.x] = '.' if clear else character.token
 
     def get_grid_square(self, point):
         return self.grid[point.y][point.x]

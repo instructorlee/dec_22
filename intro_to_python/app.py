@@ -10,7 +10,7 @@ characters = [
 is_active = True
 map = Map(characters)
 
-def get_character(character_name):
+def get_character(character_name): #snake_case, camelCase , PascalCase
 
     for character in characters:
         if character.name == character_name:
@@ -63,6 +63,7 @@ while is_active:
     elif command == 'view-characters':
         for character in characters:
             print( f'{character.token} : {character.name}')
+        continue
 
     character = get_character(command)
 
