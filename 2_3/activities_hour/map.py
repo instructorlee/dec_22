@@ -32,10 +32,6 @@ class Map:
             ['.', '.', '.' ,'.', '.', '.', '.' ,'.', '.', '.' ]
         ]
 
-        self.new_grid = [
-            [GridSquare()]
-        ]
-
     def set_character_position(self, character, clear = False):
         self.grid[character.position.y][character.position.x] = '.' if clear else character.token
 
@@ -45,7 +41,7 @@ class Map:
     def view(self):
 
         top_row = " "
-        for x in range(10):
+        for x in range(10): # 0-index end 9
             top_row += f' {x}'
         print ( top_row )
 

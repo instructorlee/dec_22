@@ -4,7 +4,7 @@ class Character:
 
     NOT_ENOUGH_POWER_POINTS = 'not_enough_power_points'
 
-    def __init__(self, type, name, inventory = [], power_points=10, can_teleport=False, position=Point(), token='?'):
+    def __init__(self, type, name, inventory = [], power_points=10,  can_teleport=False, position=Point(), token='?'):
 
         self.type=type
         self.name = name
