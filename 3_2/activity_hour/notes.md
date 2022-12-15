@@ -1,4 +1,4 @@
-users
+### users
     - address : VARCHAR(100)
     - state : CHAR(2)
     - city : (50)
@@ -8,19 +8,19 @@ users
     - password : (40)
 
 
-orders
+### orders
     - Delivery or pick up
     - quantity
 
-pizzas
+### pizzas
     - favorited? : boolean
     - size 
     - crust
 
-toppings
+### toppings
     - name
 
-pizza_topping
+### pizza_topping
     - pizza_id
 
 pizza <> topping
