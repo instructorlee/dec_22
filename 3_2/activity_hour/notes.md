@@ -22,6 +22,7 @@
 
 ### pizza_topping
     - pizza_id
+    - topping_id
 
 pizza <> topping
 orders > pizzas
